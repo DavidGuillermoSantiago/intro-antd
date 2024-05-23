@@ -1,0 +1,26 @@
+.layout-container {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.content-left {
+    height: 100vh;
+    background-color: #EBEFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.content-right {
+    height: 100vh;
+    background-color: #AFB3FF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+
