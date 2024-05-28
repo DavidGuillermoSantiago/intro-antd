@@ -1,33 +1,34 @@
 import React from "react";
-import {Col,Row} from "antd";
+import { Col, Row } from "antd";
 import './Layout.css';
 import FormLogin from "../FormLogin";
 import ImagenLogin from "../ImagenLogin";
 
-const LayoutComponent = () => {
+const LayoutComponent = ({ leftColSize, rightColSize, leftContent, rightContent }) => {
     return (
         <div className="layout-container">
-        <Row>
-        <Col xs={0} sm={0} md={4} lg={6}>
-        <div className="content-left">
-        <ImagenLogin />
-        </div>
-        </Col>
-        <Col xs={24} sm={24} md={20} lg={18}>
-        <div className="content-rigth">
-        <FormLogin />
-        </div>
-        </Col>
-        </Row>
-        {/*
-        <Row>
-        <Col xs={24} sm={24} md={20} lg={18}>
-        <div className="content-left">
-        <h1 className="title">Derecha</h1>
-        </div>
-        </Col>
-        </Row>
-    */}
+            <Row>
+                <Col
+                    xs={leftColSize.xs}
+                    sm={leftColSize.sm}
+                    md={leftColSize.md}
+                    lg={leftColSize.lg}
+                >
+                    <div className="content-left">
+                        {leftContent}
+                    </div>
+                </Col>
+                <Col
+                    xs={rightColSize.xs}
+                    sm={rightColSize.sm}
+                    md={rightColSize.md}
+                    lg={rightColSize.lg}
+                >
+                    <div className="content-rigth">
+                        {rightContent}
+                    </div>
+                </Col>
+            </Row>
         </div>
     );
 }
