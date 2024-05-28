@@ -1,5 +1,5 @@
 import React from 'react'
-import LayoutComponent from '../../components/Layout';
+import LayoutComponent from '../../components/Layout/Index.jsx';
 import ImageLogin from '../../components/ImagenLogin';
 import FormLogin from '../../components/FormLogin';
 

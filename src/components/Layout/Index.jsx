@@ -1,6 +1,6 @@
 import React from "react";
 import { Col, Row } from "antd";
-import './Layout.css';
+import './layout.css';
 import FormLogin from "../FormLogin";
 import ImagenLogin from "../ImagenLogin";
 
