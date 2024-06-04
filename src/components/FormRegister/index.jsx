@@ -4,6 +4,7 @@ import { Form, Input, Button, Card } from "antd";
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import { useNavigate } from "react-router-dom";
 import  axios from 'axios';
+import authService from '../../services/auth';
 
 import './FormRegister.css';
 
@@ -27,12 +28,12 @@ const FormRegister = () => {
     const onFinish = async (values) => {
         setLoading(true);
         try {
-            const response = await axios.post('https://api-books-omega.vercel.app/getin/signUp', {
-                readername: values.username,
-                email: values.email,
-                password: values.password,
-                roles: ['PageGuardian']
-            });
+            
+            console.log('registro');
+            const response = await authService.register( ...values );
+            console.log(response);
+            
+            
             console.log('Registro exitoso:', response.data);
             navigate('/login');
         } catch ( error ) {
