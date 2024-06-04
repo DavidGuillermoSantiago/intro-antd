@@ -7,8 +7,8 @@ import FormRegister from '../../components/FormRegister/index.jsx';
 const Login = () => {
   return (
     <LayoutComponent 
-      leftColSize={{xs:18, sm:16, md:16, lg:16}}
-      rightColSize={{xs:6, sm: 8, md:8, lg: 8}}
+      leftColSize={{xs:12, sm:12, md:12, lg:12}}
+      rightColSize={{xs:12, sm: 12, md:12, lg: 12}}
       leftContent={<ImageLogin />}
       rightContent={<FormRegister />}
     />
