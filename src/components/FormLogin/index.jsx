@@ -59,11 +59,11 @@ const FormLogin = () => {
 
                 >
                     <Form.Item
-                        name="username"
+                        name="email"
                         rules={[
                             {
                                 required: true,
-                                message: 'Por favor ingrese su usuario',
+                                message: 'Por favor ingresa tu correo',
                             }
                         ]}
                     >
