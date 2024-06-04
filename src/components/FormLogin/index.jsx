@@ -4,33 +4,33 @@ import { Form, Input, Button, Card } from "antd";
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
 import axios from "axios";
+import authService from "../../services/auth";
+import { useAuth } from "../../hooks/useAuth";
 import './FormLogin.css';
 
 const FormLogin = () => {
-
     const [loginError, setLoginError] = useState(false);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate(); 
-
-
-    const user = {
-        username: 'admin',
-        password: 'admin'
-    }
+    const useAuthData = useAuth();
+    console.log(useAuthData);
 
     const onFinish = async (values) => {
-        console.log(values);
         setLoading(true);
+        setLoginError(false);
         try {
-            const response = await axios.post('https://api-books-omega.vercel.app/getin/signin', {
-                email: values.email,
-                password: values.password
-            });
-            console.log('Inicio de sesión exitoso:', response.data);
-            localStorage.setItem('token', response.data.token);
-            navigate('/');
+            const response = await authService.loginF(values.email, values.password);
+
+            if (response && response.data) {
+                localStorage.setItem('token', response.data.token);
+                console.log(response.data.token);
+                navigate('/');
+            } else {
+                console.error('Error en el inicio de sesión: Respuesta inesperada');
+                setLoginError(true);
+            }            
         } catch ( error ) {
-            console.error('Error en el inicio de sesión:', error.response.data);
+            console.error('Error en el inicio de sesión:', error.response ? error.response.data : error.message);
             setLoginError(true);
         } finally {
             setLoading(false);

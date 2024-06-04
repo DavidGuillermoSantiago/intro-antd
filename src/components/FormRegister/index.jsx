@@ -5,6 +5,7 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import { useNavigate } from "react-router-dom";
 import  axios from 'axios';
 import authService from '../../services/auth';
+import { validatePassword } from "../../utils/validation";
 
 import './FormRegister.css';
 
@@ -16,26 +17,18 @@ const FormRegister = () => {
     const navigate = useNavigate();
 
 
-    const validatePassword = ({ getFieldValue }) => ({
-        validator(_, value) {
-            if (!value || getFieldValue('password') === value) {
-                return Promise.resolve();
-            }
-            return Promise.reject(new Error('Las contrasenias no coinciden'));
-        }
-    });
 
     const onFinish = async (values) => {
         setLoading(true);
         try {
-            
-            console.log('registro');
-            const response = await authService.register( ...values );
-            console.log(response);
-            
-            
-            console.log('Registro exitoso:', response.data);
+
+
+            const response = await authService.register( values.username, values.email, values.password );
+            console.log('registro exitoso:', response.data);
+
             navigate('/login');
+
+
         } catch ( error ) {
             console.error('Error en el registro:', error.response.data);
             setRegisterError(true);
