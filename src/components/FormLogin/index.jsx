@@ -15,6 +15,8 @@ const FormLogin = () => {
     const useAuthData = useAuth();
     console.log(useAuthData);
 
+    const { login } = useAuthData;
+
     const onFinish = async (values) => {
         setLoading(true);
         setLoginError(false);
@@ -23,6 +25,8 @@ const FormLogin = () => {
 
             if (response && response.data) {
                 localStorage.setItem('token', response.data.token);
+                login(response.data.token);
+
                 console.log(response.data.token);
                 navigate('/');
             } else {
