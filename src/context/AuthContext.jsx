@@ -1,11 +1,20 @@
 import { useState, useEffect, createContext } from "react";
 import { storageController } from "../services/token";
+import { usersService } from "../services/users";
+import { tokenExpired } from "../utils/tokenExpired";
 
 export const AuthContext = createContext();
 
 
 export const AuthProvider = (props) => {
+
     const { children } = props;
+
+    //Crear el estado del usuario
+    const [user, setUser] = useState(null);
+
+    //Crear el estao de carga
+    const [loading, setLoading] = useState(true);
 
     
     useEffect(()=>{
@@ -14,7 +23,16 @@ export const AuthProvider = (props) => {
 
     const getSession = async () => {
         const token = await storageController.getToken();
-        console.log('Token --> :', token);
+        if (!token) {
+            logout();
+            setLoading(false);
+            return;
+        }
+        if (tokenExpired(token)) {
+            logout();
+        }else {
+            login(token)
+        }
     }
 
 
@@ -22,18 +40,37 @@ export const AuthProvider = (props) => {
         try  {
             console.log('Obteniendo', token);
             await storageController.setToken(token);
+            const response = await usersService.getMe(token);
+            setUser(response)
+            setLoading(false);
+            console.log( response );
         } catch (error) {
             console.error(error);
+            setLoading(false);
+        }
+    }
+
+    const logout = async () => {
+        try {
+            await storageController.removeToken();
+            setUser(null);
+            setLoading(false);
+        } catch (error) {
+            console.log( error );
+            setLoading(false);
         }
     }
 
 
     const data = {
-        user: 'David',
+        user,
         login,
-        logout: () => console.log('logout'),
+        logout,
         upDateUser: () => console.log('updateUser')
     }
+
+    if (loading) return null;
+
 
     return (
         <AuthContext.Provider value={data}>
